@@ -4,3 +4,9 @@ class Customer < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 end
+
+
+# ゆんゆんが追加しました
+class Order < ApplicationRecord
+  enum status: { 入金確認中: 0, 入金完了: 1 }
+end
