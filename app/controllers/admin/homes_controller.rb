@@ -1,4 +1,5 @@
 class Admin::HomesController < ApplicationController
-  before_action :authenticate_admin!
+  # controller/concearns/admin_authenticate.rbから
+  include AdminAuthenticate
   def top; end
 end

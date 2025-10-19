@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  namespace :admin do
+    get 'customers/index'
+    get 'customers/show'
+    get 'customers/edit'
+    get 'customers/update'
+  end
   devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
   }
@@ -21,6 +27,7 @@ Rails.application.routes.draw do
   end
   # 管理者側のルーティング設定
   namespace :admin do
+    root to: "homes#top" #top = 注文履歴一覧
     resources :orders, only: [:show,:update]
     resources :order_details, only: [:update]
   end
