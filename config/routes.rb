@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   # 管理者側のルーティング設定
   namespace :admin do
     root to: "homes#top" #top = 注文履歴一覧
-    resources :customers, only: [:index, :show]
+    resources :customers, only: [:index, :show, :edit, :update]
     resources :orders, only: [:show,:update]
     resources :order_details, only: [:update]
   end
