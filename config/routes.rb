@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :admin_users, skip: [:registrations, :passwords] ,controllers: {
+  devise_for :admins, skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
   }
 
@@ -17,6 +17,12 @@ Rails.application.routes.draw do
   get 'orders/thanks' => 'public/orders#thanks'
 
   scope module: :public do
+    # マイページ
+    get "customers/my_page" => "customers#show"
+    # 退会
+    get "customers/unsubscribe" => "customers#unsubscribe"
+    patch "customers/withdraw" => "customers#withdraw"
+    
     resources :cart_items, only: [:index,:update,:destroy,:create] do
       delete 'destroy_all', on: :collection
    end
