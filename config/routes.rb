@@ -1,11 +1,5 @@
 Rails.application.routes.draw do
   
-  namespace :admin do
-    get 'customers/index'
-    get 'customers/show'
-    get 'customers/edit'
-    get 'customers/update'
-  end
   devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
   }
@@ -23,6 +17,12 @@ Rails.application.routes.draw do
   get 'orders/thanks' => 'public/orders#thanks'
 
   scope module: :public do
+    # マイページ
+    get "customers/my_page" => "customers#show"
+    # 退会
+    get "customers/unsubscribe" => "customers#unsubscribe"
+    patch "customers/withdraw" => "customers#withdraw"
+    
     resources :cart_items, only: [:index,:update,:destroy,:create] do
       delete 'destroy_all', on: :collection
    end
