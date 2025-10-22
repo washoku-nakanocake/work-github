@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
 
-  namespace :admin do
-    get 'items/index'
-    get 'items/show'
-    get 'items/edit'
+  namespace :public do
+    get 'addresses/index'
+    get 'addresses/edit'
   end
   devise_for :admins, skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
@@ -27,6 +26,11 @@ Rails.application.routes.draw do
     # 退会
     get "customers/unsubscribe" => "customers#unsubscribe"
     patch "customers/withdraw" => "customers#withdraw"
+    # 情報編集
+    get   "customers/information/edit" => "customers#edit"
+    patch "customers/information"      => "customers#update"
+    # 配送先
+    resources :addresses, except: [:show]
     
     resources :cart_items, only: [:index,:update,:destroy,:create] do
       delete 'destroy_all', on: :collection
