@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>注文履歴詳細</h3>
+          <table>
+            <tr>
+              <td>購入者</td>
+              <td><%= @order.customer_id.last_name + "" + @order.customer_id.first_name %></td>
+            </tr>
+            <tr>
+              <td>注文日</td>
+              <td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
+            </tr>
+            <tr>
+              <td>配送先</td>
+              <td>〒<%= @order.postal_code + "" + @order.address + "" + @order.name %></td>
+            </tr>
+            <tr>
+              <td>支払方法</td>
+              <td><%= @order.payment_method_i18n %></td>
+            </tr>
+            <tr>
+              <td>注文ステータス</td>
+              <td>
+                <%= form_with(model: @order, url: admin_order_path(@order.id), local: true, class: "form-row") do |f| %>
+                    <%= f.select :status, Order.statuses_i18n.invert, class: "order_status", class:"form-control form-control-sm col-6"  %>
+                    <%= f.submit "更新" , class: "btn btn-success" %>
+                 <% end %>
+              </td>
+            </tr>
+          </table>
+          
+            <table>
+              <tr>
+                <td>商品名</td>
+                <td>単価(税込)</td>
+                <td>数量</td>
+                <td>小計</td>
+                <td>製作ステータス</td>
+              </tr>
+              <% @order_details.each do |order_detail| %>
+              <tr>
+                <td><%= order_detail.item.name %></td>
+                <td><%= order_detail.item.price %></td>
+                <td><%= order_detail.amount %></td>
+                <td><%= order_detail.amount * order_detail.item.price %></td>
+                <td>
+                  <%= form_with(model: order_detail|, url: admin_order_detail|_path(order_detail|.id), method: :patch, local: true, class: "form-row") do |f| %>
+                    <%= f.select :making_status, OrderDetail.making_statuses_i18n.invert, class: "making_status", class:"form-control form-control-sm col-6" %>
+                    <%= f.submit "更新" , class: "btn btn-success" %>
+                  <% end %>
+                </td>
+              </tr>
+              <% end %>
+            </table>
+
+          <table>
+            <tr>
+              <td>商品合計</td>
+              <td><%= @order.total_payment %></td>
+            </tr>
+            <tr>
+              <td>配送料</td>
+              <td><%= @order.shipping_cost %></td>
+            </tr>
+            <tr>
+              <td>ご請求額</td>
+              <td><%= @order.total_payment + @order.shipping_cost %></td>
+            </tr>
+          </table>
+    </div>
+  </div>
+</div>
