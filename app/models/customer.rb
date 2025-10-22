@@ -8,4 +8,6 @@ class Customer < ApplicationRecord
   has_many :cart_items, dependent: :destroy
   # 【ウッチャン追加】アソシエーション
 
+  # customerの配送先
+  has_many :addresses, dependent: :destroy
 end
