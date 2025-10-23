@@ -1,2 +1,10 @@
-<h1>Admin::Items#show</h1>
-<p>Find me in app/views/admin/items/show.html.erb</p>
+<div class="container">
+  <h1>製品詳細</h1>
+    <%= @item.name %>
+    <%= @item.detail %>
+    <%= @item.price_without_tax %>
+    #<%= @item.genre.genre_id %>
+    <%= @item.is_active %>
+    # 製品ステータス
+    <%= link_to "編集", edit_admin_item_path(@item), class: "btn btn-primary" %>
+</div>

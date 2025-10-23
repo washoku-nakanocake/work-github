@@ -1,4 +1,6 @@
 class Admin::ItemsController < ApplicationController
+  before_action :set_item, only: [:show]
+
   def index
     @items = Item.all
   end
@@ -27,5 +29,9 @@ class Admin::ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:name, :detail, :price_without_tax, :is_active, :image)
+  end
+
+  def set_item
+    @item = Item.find(params[:id])
   end
 end
