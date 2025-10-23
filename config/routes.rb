@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  root to: "public/homes#top"
+
   namespace :public do
     get 'addresses/index'
     get 'addresses/edit'
