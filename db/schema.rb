@@ -10,7 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2025_10_23_015251) do
 
   create_table "addresses", force: :cascade do |t|
@@ -22,9 +21,6 @@ ActiveRecord::Schema.define(version: 2025_10_23_015251) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["customer_id"], name: "index_addresses_on_customer_id"
   end
-=======
-ActiveRecord::Schema.define(version: 2025_10_22_080340) do
->>>>>>> 4ee836c74ae30a289a5c55f6a37a1344fb6ef71b
 
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -94,10 +90,5 @@ ActiveRecord::Schema.define(version: 2025_10_22_080340) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
-
-<<<<<<< HEAD
-  add_foreign_key "addresses", "customers"
-=======
->>>>>>> 4ee836c74ae30a289a5c55f6a37a1344fb6ef71b
-  add_foreign_key "items", "genres"
+  add_foreign_key "addresses", "customers", "items", "genres"
 end
