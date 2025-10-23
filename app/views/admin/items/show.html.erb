@@ -1,10 +1,35 @@
-<div class="container">
-  <h1>製品詳細</h1>
+<div>
+  <h1>商品詳細</h1>
+  <div>
+    <%= image_tag @item.image, style: "max-width: 300px;" %>
+  </div>
+
+  <div>
+    <strong>商品名:</strong>
     <%= @item.name %>
+  </div>
+
+  <div>
+    <strong>商品詳細:</strong>
     <%= @item.detail %>
-    <%= @item.price_without_tax %>
-    #<%= @item.genre.genre_id %>
-    <%= @item.is_active %>
-    # 製品ステータス
+  </div>
+
+  <div>
+    <strong>ジャンル:</strong>
+    <%= @item.genre&.name %>
+  </div>
+
+  <div>
+    <strong>税抜価格:</strong>
+    <%= number_to_currency(@item.price_without_tax, unit: "¥", precision: 0) %>
+  </div>
+
+  <div>
+    <strong>ステータス:</strong>
+    <%= @item.is_active? ? "販売中" : "販売停止" %>
+  </div>
+
+  <div>
     <%= link_to "編集", edit_admin_item_path(@item), class: "btn btn-primary" %>
+  </div>
 </div>
