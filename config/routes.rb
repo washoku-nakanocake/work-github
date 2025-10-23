@@ -1,12 +1,5 @@
 Rails.application.routes.draw do
 
-<<<<<<< HEAD
-  namespace :admin do
-    resources :items
-  end
-
-=======
->>>>>>> feature-create_controller_and_views_admin/items
   namespace :public do
     get 'addresses/index'
     get 'addresses/edit'
