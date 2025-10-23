@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     resources :orders, only: [:show,:update]
     resources :order_details, only: [:update]
     resources :items
-    resources :genres, only: [:index, :create]
+    resources :genres, only: [:index, :create, :edit, :update]
   end
   # 【ウッチャン追加】ネスト未設定
 end
