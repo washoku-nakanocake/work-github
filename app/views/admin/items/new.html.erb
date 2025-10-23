@@ -25,6 +25,14 @@
     </div>
 
     <div>
+      <%= f.label :is_active, "販売状況" %><br>
+      <%= f.radio_button :is_active, true %>
+      <%= f.label :is_active_true, "販売中" %>
+      <%= f.radio_button :is_active, false %>
+      <%= f.label :is_active_false, "販売停止" %>
+    </div>
+
+    <div>
       <%= f.submit '新規登録', class: "btn btn-success" %>
     </div>
   <% end %>
