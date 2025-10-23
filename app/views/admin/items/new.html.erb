@@ -15,12 +15,13 @@
     </div>
 
     <div>
-      # ジャンル選択項目
+      <%= f.label :genre_id, "ジャンル", class: "form-label" %>
+      <%= f.collection_select :genre_id, Genre.all, :id, :name, {}, {class: 'form-control'} %>
     </div>
 
     <div>
       <%= f.label :price_without_tax, "税抜価格", class: "form-label" %>
-      <%= f.text_area :price_without_tax, class: "form-control" %>
+      <%= f.text_field :price_without_tax, class: "form-control" %>
     </div>
 
     <div>

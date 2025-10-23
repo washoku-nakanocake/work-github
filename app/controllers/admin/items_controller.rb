@@ -12,9 +12,9 @@ class Admin::ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     if @item.save
-      redirect_to show
+      redirect_to admin_item_path(@item), notice: "商品を登録しました"
     else
-      render new
+      render :new
     end
   end
 
@@ -28,7 +28,7 @@ class Admin::ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :detail, :price_without_tax, :is_active, :image)
+    params.require(:item).permit(:name, :detail, :price_without_tax, :is_active, :image, :genre_id)
   end
 
   def set_item
