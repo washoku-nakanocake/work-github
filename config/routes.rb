@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
 
+<<<<<<< HEAD
   namespace :admin do
     resources :items
   end
 
+=======
+>>>>>>> feature-create_controller_and_views_admin/items
   namespace :public do
     get 'addresses/index'
     get 'addresses/edit'
@@ -47,6 +50,7 @@ Rails.application.routes.draw do
     resources :customers, only: [:index, :show, :edit, :update]
     resources :orders, only: [:show,:update]
     resources :order_details, only: [:update]
+    resources :items
   end
   # 【ウッチャン追加】ネスト未設定
 end
