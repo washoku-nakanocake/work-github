@@ -1,5 +1,5 @@
 class Admin::ItemsController < ApplicationController
-  before_action :set_item, only: [:show]
+  before_action :set_item, only: [:show, :edit, :update]
 
   def index
     @items = Item.all
@@ -25,10 +25,18 @@ class Admin::ItemsController < ApplicationController
   def edit
   end
 
+  def update
+    if @item.update(item_params)
+      redirect_to admin_item_path(@item), notice: "商品を更新しました"
+    else
+      render :edit
+    end
+  end
+
   private
 
   def item_params
-    params.require(:item).permit(:name, :detail, :price_without_tax, :is_active, :image, :genre_id)
+    params.require(:item).permit(:name, :detail, :price_without_tax, :status, :image, :genre_id)
   end
 
   def set_item
