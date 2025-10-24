@@ -25,11 +25,15 @@
     </div>
 
     <div>
-      <%= f.label :is_active, "販売状況" %><br>
-      <%= f.radio_button :is_active, true %>
-      <%= f.label :is_active_true, "販売中" %>
-      <%= f.radio_button :is_active, false %>
-      <%= f.label :is_active_false, "販売停止" %>
+      <%= f.label :status, '販売ステータス'%>
+      <div>
+        <%= f.radio_button :status, 'on_sale', checked: @item.status == 'on_sale', class: 'custom-control-input', id: 'status-on-sale' %>
+        <%= f.label :status, '販売中', class: 'custom-control-label', for: 'status-on-sale' %>
+      </div>
+      <div>
+        <%= f.radio_button :status, 'off_sale', checked: @item.status == 'off_sale', class: 'custom-control-input', id: 'status-off-sale' %>
+        <%= f.label :status, '販売停止中', class: 'custom-control-label', for: 'status-off-sale' %>
+      </div>
     </div>
 
     <div>

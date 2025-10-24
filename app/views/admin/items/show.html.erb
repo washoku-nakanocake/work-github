@@ -26,7 +26,7 @@
 
   <div>
     <strong>ステータス:</strong>
-    <%= @item.is_active? ? "販売中" : "販売停止" %>
+    <%= @item.on_sale? ? '販売中' : '販売停止中' %>
   </div>
 
   <div>
