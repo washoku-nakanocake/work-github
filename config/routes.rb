@@ -1,16 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :public do
-    root to: "homes#top"
-    get 'homes/about'
-    get 'addresses/index'
-    get 'addresses/edit'
-    resources :items, only: [:index, :show] do
-      collection do
-        get 'genre_search_result'
-      end
-    end
-  end
   devise_for :admins, path: 'admin', skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
   }
@@ -28,6 +17,15 @@ Rails.application.routes.draw do
   get 'orders/thanks' => 'public/orders#thanks'
 
   scope module: :public do
+    root to: "homes#top"
+    get 'homes/about'
+    get 'addresses/index'
+    get 'addresses/edit'
+    resources :items, only: [:index, :show] do
+      collection do
+        get 'genre_search_result'
+      end
+    end
     # マイページ
     get "customers/my_page" => "customers#show"
     # 退会
