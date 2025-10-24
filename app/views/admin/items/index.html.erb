@@ -17,7 +17,7 @@
           <td><%= item.name %></td>
           <td><%= item.price_without_tax %></td>
           <td><%= item.genre.name if item.genre.present? %></td>
-          <td><%= item.is_active ? "販売中" : "販売停止" %></td>
+          <td><%= item.on_sale? ? '販売中' : '販売停止中' %></td>
         </tr>
       <% end %>
     </tbody>
