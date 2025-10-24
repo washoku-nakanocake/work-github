@@ -1,0 +1,9 @@
+<%# keyとは メッセージの種類（例：notice, aleartなど） %>
+<% flash.each do |key, msg| %>
+  <% cls = case key.to_s
+           when "notice" then "alert-success"
+           when "alert"  then "alert-danger"
+           else "alert-info"
+           end %>
+  <div class="alert <%= cls %>" role="alert"><%= msg %></div>
+<% end %>
