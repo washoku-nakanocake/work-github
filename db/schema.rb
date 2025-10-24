@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2025_10_24_025438) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -39,6 +40,9 @@ ActiveRecord::Schema.define(version: 2025_10_24_025438) do
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
+=======
+ActiveRecord::Schema.define(version: 2025_10_23_141713) do
+>>>>>>> develop
 
   create_table "addresses", force: :cascade do |t|
     t.integer "customer_id", null: false
@@ -79,6 +83,13 @@ ActiveRecord::Schema.define(version: 2025_10_24_025438) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.boolean "is_active", default: true, null: false
+    t.string "last_name"
+    t.string "first_name"
+    t.string "last_name_kana"
+    t.string "first_name_kana"
+    t.string "postal_code"
+    t.string "address"
+    t.string "telephone_number"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
   end
@@ -128,8 +139,11 @@ ActiveRecord::Schema.define(version: 2025_10_24_025438) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+<<<<<<< HEAD
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+=======
+>>>>>>> develop
   add_foreign_key "addresses", "customers"
   add_foreign_key "items", "genres"
 end
