@@ -10,5 +10,6 @@ class Item < ApplicationRecord
     validates :price_without_tax
     validates :is_active
     validates :genre_id, presence: true
+    validates :image
   end
 end
