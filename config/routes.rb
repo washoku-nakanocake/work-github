@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   namespace :public do
     get 'addresses/index'
     get 'addresses/edit'
-    resources :items, only: [:index, :show]
+    resources :items, only: [:index, :show] do
+      collection do
+        get 'genre_search_result'
+      end
+    end
   end
   devise_for :admins, skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
