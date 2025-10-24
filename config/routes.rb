@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     get 'addresses/edit'
     resources :items, only: [:index, :show]
   end
-  devise_for :admins, skip: [:registrations, :passwords] ,controllers: {
+  devise_for :admins, path: 'admin', skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
   }
 
