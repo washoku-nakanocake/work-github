@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     get 'addresses/index'
     get 'addresses/edit'
   end
-  devise_for :admins, skip: [:registrations, :passwords] ,controllers: {
+  devise_for :admins, path: 'admin', skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
   }
 
