@@ -1,4 +1,4 @@
-<h2>ジャンル検索</h2>
+<%= render "public/items/genre_search", genres: @genres, items: @serch_items %>
 
 <p>ようこそながのCAKEへ！</p></br>
 <p>このサイトは、ケーキ販売のECサイトになります。</p></br>
@@ -6,3 +6,17 @@
 <p>購入には会員登録が必要になります。</p></br>
 
 <h1>新商品</h1>
+<div class="row">
+  <% @items.each do |item| %>
+    <div class="col-12 col-sm-6 col-md-3 mb-4">
+      <div class="card">
+        <%= image_tag item.image, class: "card-img-top", style: "max-width: 300px;" %>
+        <div class="card-body">
+          <h5 class="card-title"><%= item.name %></h5>
+          <p class="card-text"><%= item.detail %></p>
+          <p class="card-text">¥<%= item.price_without_tax %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

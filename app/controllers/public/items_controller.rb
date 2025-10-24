@@ -13,7 +13,7 @@ class Public::ItemsController < ApplicationController
   def genre_search_result
     @genre_id = params[:genre_id]
     @genres = Genre.all
-     @items = Item.where(genre_id: @genre_id).page(params[:page]).per(8)
+    @items = Item.where(genre_id: @genre_id).page(params[:page]).per(8)
     @total_count = @items.count
   end
 end

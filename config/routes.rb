@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   namespace :public do
+    root to: "homes#top"
     get 'addresses/index'
     get 'addresses/edit'
     resources :items, only: [:index, :show] do
@@ -44,7 +45,6 @@ Rails.application.routes.draw do
   end
   ## 管理者側のルーティング設定
   namespace :admin do
-    root to: "homes#top" #top = 注文履歴一覧
     resources :customers, only: [:index, :show, :edit, :update]
     resources :orders, only: [:show,:update]
     resources :order_details, only: [:update]
