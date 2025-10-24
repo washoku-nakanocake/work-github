@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
 
-  root to: "public/homes#top"
-
   namespace :public do
+    root to: "homes#top"
+    get 'homes/about'
     get 'addresses/index'
     get 'addresses/edit'
+    resources :items, only: [:index, :show] do
+      collection do
+        get 'genre_search_result'
+      end
+    end
   end
   devise_for :admins, path: 'admin', skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
@@ -41,10 +46,11 @@ Rails.application.routes.draw do
   end
   ## 管理者側のルーティング設定
   namespace :admin do
-    root to: "homes#top" #top = 注文履歴一覧
     resources :customers, only: [:index, :show, :edit, :update]
     resources :orders, only: [:show,:update]
     resources :order_details, only: [:update]
+    resources :items
+    resources :genres, only: [:index, :create, :edit, :update]
   end
   # 【ウッチャン追加】ネスト未設定
 end
