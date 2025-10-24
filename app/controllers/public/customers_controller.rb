@@ -1,6 +1,7 @@
 class Public::CustomersController < ApplicationController
   include CustomerAuthenticate
-
+  before_action :set_customer, only: [:edit, :update, :show]
+  
   def show
     @customer = current_customer
   end
@@ -12,6 +13,8 @@ class Public::CustomersController < ApplicationController
     reset_session
     redirect_to new_customer_registration_path, notice: "退会手続きが完了しました。"
   end
+  
+  def edit; end
 
   def update
     if @customer.update(customer_params)
