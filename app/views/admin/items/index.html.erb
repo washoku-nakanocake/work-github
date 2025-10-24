@@ -1,0 +1,25 @@
+<div>
+  <h1>商品一覧</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>商品ID</th>
+        <th>商品名</th>
+        <th>税抜価格</th>
+        <th>ジャンル</th>
+        <th>ステータス</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <td><%= item.id %></td>
+          <td><%= item.name %></td>
+          <td><%= item.price_without_tax %></td>
+          <td><%= item.genre.name if item.genre.present? %></td>
+          <td><%= item.on_sale? ? '販売中' : '販売停止中' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

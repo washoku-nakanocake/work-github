@@ -1,0 +1,37 @@
+<h1>製品詳細</h1>
+
+<div class="product-detail">
+  <div class="mb-3">
+    <%= image_tag @item.image, class: "card-img-top", style: "max-width: 300px;" %>
+  </div>
+
+  <div class="mb-2">
+    <strong>商品名：</strong><%= @item.name %>
+  </div>
+
+  <div class="mb-2">
+    <strong>詳細：</strong><%= @item.detail %>
+  </div>
+
+  <div class="mb-2">
+    <strong>価格：</strong>¥<%= @item.price_without_tax %>
+  </div>
+
+  <div class="mb-3">
+    <strong>販売状況：</strong><%= @item.is_active ? "販売中" : "販売停止" %>
+  </div>
+
+  <div class="product-purchase mt-3">
+    <%= form_with url: cart_items_path(@item), method: :post, local: true do |f| %>
+      <!-- カートに入れる個数指定 -->
+      <div class="mb-2">
+        <%= f.select :quantity, 1..10, {}, class: "form-control", style: "width: 100px;" %>
+      </div>
+
+      <!-- カートに入れるボタン -->
+      <div>
+        <%= f.submit "カートに入れる", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

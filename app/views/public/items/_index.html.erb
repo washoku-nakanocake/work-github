@@ -1,13 +1,9 @@
-<%= render "public/items/genre_search", genres: @genres, items: @serch_items %>
+<h3>商品一覧（全<%= total_count %>件）</h3>
 
-<p>ようこそながのCAKEへ！</p></br>
-<p>このサイトは、ケーキ販売のECサイトになります。</p></br>
-<p>会員でない方も商品の閲覧はできますが、</p></br>
-<p>購入には会員登録が必要になります。</p></br>
+<%= render "genre_search", genres: genres %>
 
-<h1>新商品</h1>
 <div class="row">
-  <% @items.each do |item| %>
+  <% items.each do |item| %>
     <div class="col-12 col-sm-6 col-md-3 mb-4">
       <div class="card">
         <%= image_tag item.image, class: "card-img-top", style: "max-width: 300px;" %>
@@ -19,4 +15,8 @@
       </div>
     </div>
   <% end %>
+</div>
+
+<div class="d-flex justify-content-center">
+  <%= paginate items %>
 </div>
