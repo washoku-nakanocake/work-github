@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :public do
     get 'addresses/index'
     get 'addresses/edit'
+    resources :items, only: [:index, :show]
   end
   devise_for :admins, skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
