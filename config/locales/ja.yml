@@ -16,3 +16,29 @@ ja:
         waiting_for_making: "製作待ち"
         in_making: "製作中"
         making_completed: "製作完了"
+
+  devise:
+    failure:
+      # 共通
+      already_authenticated: "すでにログインしています。"
+      unauthenticated: "ログインしてください。"
+      # スコープ別
+      admin:
+        unauthenticated: "管理者としてログインしてください。"
+      customer:
+        already_authenticated: "すでにログインしています。"
+        unauthenticated: "ログインしてください。"
+
+    sessions:
+      signed_in: "ログインしました。"
+      signed_out: "ログアウトしました。"
+      already_signed_out: "すでにログアウト済みです。"
+
+    registrations:
+      signed_up: "アカウント登録が完了しました。"
+      updated: "アカウント情報を更新しました。"
+      destroyed: "アカウントを削除しました。"
+
+    passwords:
+      send_instructions: "パスワード再設定用のメールを送信しました。"
+      updated: "パスワードを変更しました。"
