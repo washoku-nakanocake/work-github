@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   namespace :public do
     root to: "homes#top"
+    get 'homes/about'
     get 'addresses/index'
     get 'addresses/edit'
     resources :items, only: [:index, :show] do

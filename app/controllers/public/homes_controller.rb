@@ -6,4 +6,6 @@ class Public::HomesController < ApplicationController
     @serch_items = Item.where(genre_id: @genre_id).page(params[:page]).per(8)
   end
 
+  def about
+  end
 end
