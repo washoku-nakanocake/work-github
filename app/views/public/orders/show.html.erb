@@ -10,7 +10,7 @@
             </tr>
             <tr>
               <td>配送先</td>
-              <td>〒<%= @order.postal_code + "" + @order.address + "" + @order.name %></td>
+              <td>〒<%= @order.postal_code %> <%= @order.address  %> <%= @order.name %></td>
             </tr>
             <tr>
               <td>支払方法</td>
@@ -49,9 +49,9 @@
               <% @order_details.each do |order_detail| %>
               <tr>
                 <td><%= order_detail.item.name %></td>
-                <td><%= order_detail.item.price %></td>
+                <td><%= order_detail.price %></td>
                 <td><%= order_detail.amount %></td>
-                <td><%= order_detail.amount * order_detail.item.price %></td>
+                <td><%= order_detail.amount * order_detail.price %></td>
               </tr>
               <% end %>
             </table>

@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     if resource_or_scope == :admin || resource_or_scope.is_a?(Admin)
       new_admin_session_path
     else
-      about_path #about_pathでいいでしょうか？
+      root_path #about_pathでいいでしょうか？
     end
   end
 

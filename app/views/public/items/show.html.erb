@@ -22,16 +22,10 @@
   </div>
 
   <div class="product-purchase mt-3">
-    <%= form_with url: cart_items_path(@item), method: :post, local: true do |f| %>
-      <!-- カートに入れる個数指定 -->
-      <div class="mb-2">
-        <%= f.select :quantity, 1..10, {}, class: "form-control", style: "width: 100px;" %>
-      </div>
-
-      <!-- カートに入れるボタン -->
-      <div>
+      <%= form_with model: @cart_item, data: { turbo: false } do |f| %>
+        <%= f.hidden_field :item_id, :value => @item.id %>
+        <%= f.select :amount, *[1..10] %>
         <%= f.submit "カートに入れる", class: "btn btn-primary" %>
-      </div>
-    <% end %>
+      <% end %>
   </div>
 </div>

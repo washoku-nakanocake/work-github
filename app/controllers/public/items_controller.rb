@@ -8,6 +8,7 @@ class Public::ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+    @cart_item = CartItem.new #【ウッチャン追加】
   end
 
   def genre_search_result
