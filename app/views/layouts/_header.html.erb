@@ -23,6 +23,7 @@
           <li class="nav-item"><%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "nav-link" %></li>
 
         <% else %>
+          <li class="nav-item"><%= link_to "About", (about_path rescue "#"), class: "nav-link" %></li>
           <li class="nav-item"><%= link_to "商品一覧", (items_path rescue "#"), class: "nav-link" %></li>
           <li class="nav-item"><%= link_to "新規登録", new_customer_registration_path, class: "nav-link" %></li>
           <li class="nav-item"><%= link_to "ログイン", new_customer_session_path, class: "nav-link" %></li>

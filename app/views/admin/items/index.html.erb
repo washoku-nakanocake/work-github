@@ -14,7 +14,9 @@
       <% @items.each do |item| %>
         <tr>
           <td><%= item.id %></td>
-          <td><%= item.name %></td>
+          <td class="card-title">
+            <%= link_to item.name, admin_item_path(item) %>
+          </td>
           <td><%= item.price_without_tax %></td>
           <td><%= item.genre.name if item.genre.present? %></td>
           <td><%= item.on_sale? ? '販売中' : '販売停止中' %></td>

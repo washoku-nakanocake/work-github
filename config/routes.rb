@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   ## 会員側のルーティング設定
   scope module: :public do
     root to: "homes#top"
-    get 'homes/about'
+    get "about", to: "homes#about" #少し変更しました。headerボタンのため
     get 'addresses/index'
     get 'addresses/edit'
     resources :items, only: [:index, :show] do
@@ -46,10 +46,11 @@ Rails.application.routes.draw do
 
   ## 管理者側のルーティング設定
   namespace :admin do
+    root to: "homes#top"
     resources :customers, only: [:index, :show, :edit, :update]
     resources :orders, only: [:show,:update]
     resources :order_details, only: [:update]
-    resources :items
+    resources :items, only: [:index, :show, :new, :create, :edit, :update]
     resources :genres, only: [:index, :create, :edit, :update]
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
