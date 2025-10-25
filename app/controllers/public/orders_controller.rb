@@ -10,7 +10,6 @@ class Public::OrdersController < ApplicationController
              .order(created_at: :desc)
              .page(params[:page])
   end
-  
     
   def show
     @order = Order.find(params[:id])
@@ -74,6 +73,11 @@ class Public::OrdersController < ApplicationController
       end
     @order.total_payment = ary.sum
     @order.payment_method = params[:order][:payment_method]
+      if @order.payment_method == "credit_card"
+        initial_making_status = 1
+      else
+        initial_making_status = 0
+      end
     @order.status = (@order.payment_method == "credit_card") ? 1 : 0
     @order.postal_code = params[:order][:postal_code]
     @order.address = params[:order][:address]
@@ -87,7 +91,7 @@ class Public::OrdersController < ApplicationController
           item_id: cart_item.item.id, 
           price: item_price_with_tax, # ★ 税込価格を保存
           amount: cart_item.amount, 
-          making_status: (@order.status == 1) ? 1 : 0 # statusからmaking_statusを決定
+          making_status: initial_making_status
         )
       end
       @cart_items.destroy_all

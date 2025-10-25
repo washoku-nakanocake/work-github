@@ -3,7 +3,7 @@ class Admin::OrderDetailsController < ApplicationController
     params.require(:order_detail).permit(:making_status)
   end
   
-  def update 
+  def update
     @order_detail = OrderDetail.find(params[:id])
     @order = @order_detail.order
     @order_details = @order.order_details.all # 注文に紐づく全ての商品を取得
