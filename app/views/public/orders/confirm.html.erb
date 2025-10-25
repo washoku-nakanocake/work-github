@@ -12,13 +12,15 @@
           </tr>
           <% @cart_items.each do |cart_item| %>
           <tr>
+            <% # item_price_with_taxを計算して表示する %>
+            <% item_price_with_tax = (cart_item.item.price_without_tax * 1.1).floor %>
             <td>
               <%= image_tag cart_item.item.image, size: "100x80" %>
               <strong><%= cart_item.item.name %></strong>
             </td>
-            <td><%= cart_item.item.price %></td>
+            <td><%= item_price_with_tax %></td>
             <td><%= cart_item.amount %></td>
-            <td><%= cart_item.item.price*cart_item.amount %></td>
+            <td><%= item_price_with_tax*cart_item.amount %></td>
           </tr>
           <% end %>
         </table>
@@ -30,16 +32,16 @@
           </tr>
           <tr>
             <td>商品合計</td>
-            <td><%= @cart_items_price %></td>
+            <td><%= @total_payment %></td>
           </tr>
           <tr>
             <td>請求金額</td>
-            <td><%= @total_payment %></td>
+            <td><%= @total_payment + @shipping_cost %></td>
           </tr>
         </table>
 
       <h4>支払方法</h4>
-        <% if @selected_pay_method == "credit_card" %>
+        <% if @selected_payment_method == "credit_card" %>
           クレジットカード
         <% else %>
           銀行振込
@@ -47,15 +49,23 @@
         
       <h4>お届け先</h4>
         <%= @selected_address %>
-        <%= form_with url: orders_thanks_path, method: :post do %>
+        <%= form_with url: orders_path, method: :post do %>
           <%= hidden_field_tag 'order[payment_method]', @selected_payment_method %>
           <%= hidden_field_tag 'order[address_type]', @address_type %>
-            <% if @address_type == "registered_address" %>
+            <% if @address_type == "customer_address" %>
+              <%= hidden_field_tag 'order[postal_code]', current_customer.postal_code %>
+              <%= hidden_field_tag 'order[address]', current_customer.address %>
+              <%= hidden_field_tag 'order[name]', current_customer.last_name + current_customer.first_name %>
+            <% elsif @address_type == "registered_address" %>
+              <% selected_address_parts = @selected_address.split(' ', 3) %>
+              <%= hidden_field_tag 'order[postal_code]', selected_address_parts[0] %>
+              <%= hidden_field_tag 'order[address]', selected_address_parts[1] %>
+              <%= hidden_field_tag 'order[name]', selected_address_parts[2] %>
               <%= hidden_field_tag 'order[registered_address_id]', params[:order][:registered_address_id] %>
             <% elsif @address_type == "new_address" %>
-              <%= hidden_field_tag 'order[new_postal_code]', params[:order][:new_postal_code] %>
-              <%= hidden_field_tag 'order[new_address]', params[:order][:new_address] %>
-              <%= hidden_field_tag 'order[new_name]', params[:order][:new_name] %>
+              <%= hidden_field_tag 'order[postal_code]', params[:order][:new_postal_code] %>
+              <%= hidden_field_tag 'order[address]', params[:order][:new_address] %>
+              <%= hidden_field_tag 'order[name]', params[:order][:new_name] %>
             <% end %>
           <%= submit_tag "注文を確定する", class: "btn btn-success" %>
         <% end %>
