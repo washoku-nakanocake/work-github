@@ -23,8 +23,10 @@
               <td>注文ステータス</td>
               <td>
                 <%= form_with(model: @order, url: admin_order_path(@order.id), local: true, class: "form-row") do |f| %>
-                    <%= f.select :status, Order.statuses_i18n.invert, { selected: @order.status_i18n }, class: "form-control form-control-sm col-6" %>
-                    <%= f.submit "更新" , class: "btn btn-success" %>
+                  <%# ★ 修正: オプションリストを配列形式に直し、selected: にデータベースの値(@order.status)を渡す ★ %>
+                  <%= f.select :status, @order.class.statuses.keys.map { |k| [ @order.class.statuses_i18n[k], k ] }, 
+                               { selected: @order.status }, class: "form-control form-control-sm col-6" %>
+                  <%= f.submit "更新" , class: "btn btn-success" %>
                  <% end %>
               </td>
             </tr>
@@ -46,7 +48,9 @@
                 <td><%= order_detail.amount * order_detail.price %></td>
                 <td>
                   <%= form_with(model: order_detail, url: admin_order_detail_path(order_detail.id), method: :patch, local: true, class: "form-row") do |f| %>
-                    <%= f.select :making_status, OrderDetail.making_statuses_i18n.invert, { selected: order_detail.making_status_i18n }, class: "form-control form-control-sm col-6" %>
+                    <%# ★ 修正: オプションリストを配列形式に直し、selected: にデータベースの値(order_detail.making_status)を渡す ★ %>
+                    <%= f.select :making_status, order_detail.class.making_statuses.keys.map { |k| [ order_detail.class.making_statuses_i18n[k], k ] }, 
+                                 { selected: order_detail.making_status }, class: "form-control form-control-sm col-6" %>
                     <%= f.submit "更新" , class: "btn btn-success" %>
                   <% end %>
                 </td>
