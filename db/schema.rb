@@ -107,7 +107,6 @@ ActiveRecord::Schema.define(version: 2025_10_24_025438) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status", default: 0
     t.index ["genre_id"], name: "index_items_on_genre_id"
-    t.index ["is_active"], name: "index_items_on_is_active"
     t.index ["name"], name: "index_items_on_name"
     t.index ["price_without_tax"], name: "index_items_on_price_without_tax"
   end

@@ -6,7 +6,7 @@
       <tr>
         <th>購入日時</th>
         <th>購入者</th>
-        <th>注文数</th>
+        <th>注文個数</th>
         <th>ステータス</th>
       </tr>
     </thead>
@@ -15,11 +15,11 @@
       <% @orders.each do |o| %>
         <tr>
           <%# local 年月日のフォーマット %>
-          <td><%= l(o.purchased_at) rescue o.purchased_at %></td>
+          <td><%= l(o.created_at) rescue o.created_at %></td>
           <%# if customer = nil, return nil、普通はありえないことなんですが、 念の為 if nil show "-"" にします %>
-          <td><%= o.customer&.full_name || "#{o.customer&.last_name} #{o.customer&.first_name}" || "—" %></td>
-          <td><%= o.try(:items_count) || "—" %></td>
-          <td><%= o.status %></td>
+          <td><%= [o.customer&.last_name, o.customer&.first_name].compact.join(' ').presence || "—" %></td>
+          <td><%= o.order_details.size %>
+          <td><%= t("enums.order.status.#{o.status}", default: o.status) %></td>
         </tr>
       <% end %>
     </tbody>

@@ -9,14 +9,16 @@
 <div class="row">
   <% @items.each do |item| %>
     <div class="col-12 col-sm-6 col-md-3 mb-4">
-      <div class="card">
-        <%= image_tag item.image, class: "card-img-top", style: "max-width: 300px;" %>
-        <div class="card-body">
-          <h5 class="card-title"><%= item.name %></h5>
-          <p class="card-text"><%= item.detail %></p>
-          <p class="card-text">¥<%= item.price_without_tax %></p>
+      <%= link_to item_path(item) do %>
+        <div class="card h-100">
+          <%= image_tag item.image, class: "card-img-top", style: "max-width: 300px;" %>
+          <div class="card-body">
+            <h5 class="card-title mb-1"><%= item.name %></h5>
+            <p class="card-text mb-1"><%= item.detail %></p>
+            <p class="card-text">¥<%= item.price_without_tax %></p>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   <% end %>
 </div>
