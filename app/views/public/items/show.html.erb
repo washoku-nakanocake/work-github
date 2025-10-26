@@ -27,9 +27,6 @@
           <% price_with_tax = (@item.price_without_tax * tax_rate).round %>
           <%= number_to_currency(price_with_tax, unit: "¥", precision: 0) %> (<%= number_to_currency(@item.price_without_tax, unit: "¥", precision: 0) %>)
         </dd>
-
-        <dt class="col-sm-4 mb-3">販売ステータス:</dt>
-        <dd class="col-sm-8"><%= @item.is_active ? "販売中" : "販売停止" %></dd>
       </dl>
 
       <div class="product-purchase mt-3 d-flex align-items-center">
