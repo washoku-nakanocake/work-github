@@ -19,7 +19,7 @@
   </head>
 
   <!-- sticky footer: flex column + main.flex-fill -->
-  <body class="d-flex flex-column min-vh-100">
+  <body class="<%= ['d-flex','flex-column','min-vh-100', (content_for?(:body_class) ? yield(:body_class) : nil)].compact.join(' ') %>">
     <%= render "layouts/header" %>
 
     <main role="main" class="flex-fill py-4">

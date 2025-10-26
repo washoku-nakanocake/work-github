@@ -5,7 +5,7 @@ class Public::AddressesController < ApplicationController
 
   def index
     @address   = Address.new
-    @addresses = current_customer.addresses.order(id: :desc)
+    @addresses = current_customer.addresses.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def create

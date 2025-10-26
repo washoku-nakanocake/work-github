@@ -1,29 +1,85 @@
-<h2>配送先登録 / 一覧</h2>
+<div class="container">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">配送先登録 / 一覧</h1>
+  </div>
 
-<%= form_with model: @address, url: addresses_path, local: true do |f| %>
-  <div>郵便番号(ハイフンなし) <%= f.text_field :postal_code %></div>
-  <div>住所 <%= f.text_field :address %></div>
-  <div>宛名 <%= f.text_field :name %></div>
-  <div><%= f.submit "新規登録" %></div>
-<% end %>
+  <% if @address&.errors&.any? %>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        <% @address.errors.full_messages.each do |m| %>
+          <li><%= m %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<hr>
+  <!-- 新規登録フォーム -->
+  <div class="card mb-4">
+    <div class="card-header">新規登録</div>
+    <div class="card-body">
+      <%= form_with model: @address, url: addresses_path, local: true do |f| %>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>郵便番号(ハイフンなし)</label>
+            <%= f.text_field :postal_code, class: "form-control", placeholder: "0000000" %>
+          </div>
+          <div class="form-group col-md-8">
+            <label>宛名</label>
+            <%= f.text_field :name, class: "form-control" %>
+          </div>
+        </div>
 
-<table>
-  <thead>
-    <tr><th>郵便番号</th><th>住所</th><th>宛名</th><th>操作</th></tr>
-  </thead>
-  <tbody>
-    <% @addresses.each do |a| %>
-      <tr>
-        <td><%= a.postal_code %></td>
-        <td><%= a.address %></td>
-        <td><%= a.name %></td>
-        <td>
-          <%= link_to "編集する", edit_address_path(a) %>
-          <%= button_to "削除する", address_path(a), method: :delete %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        <div class="form-group">
+          <label>住所</label>
+          <%= f.text_field :address, class: "form-control", placeholder: "東京都渋谷区代々木神園町0-0" %>
+        </div>
+
+        <div class="text-right">
+          <%= f.submit "新規登録", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- 一覧 -->
+  <% if @addresses.present? %>
+    <div class="card">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" style="width: 140px;">郵便番号</th>
+                <th scope="col">住所</th>
+                <th scope="col" style="width: 220px;">宛名</th>
+                <th scope="col" class="text-center" style="width: 180px;">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @addresses.each do |a| %>
+                <tr>
+                  <td><%= a.postal_code %></td>
+                  <td><%= a.address %></td>
+                  <td><%= a.name %></td>
+                  <td class="text-center">
+                    <%= link_to "編集", edit_address_path(a), class: "btn btn-outline-secondary btn-sm mr-2" %>
+                    <%= button_to "削除", address_path(a), method: :delete,
+                                  data: { confirm: "削除しますか？" },
+                                  class: "btn btn-danger btn-sm",
+                                  form: { class: "d-inline" } %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-3 d-flex justify-content-center">
+      <%= paginate @addresses if respond_to?(:paginate) %>
+    </div>
+  <% else %>
+    <div class="alert alert-info">登録済みの配送先がありません。</div>
+  <% end %>
+</div>
