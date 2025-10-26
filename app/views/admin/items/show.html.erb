@@ -26,6 +26,7 @@
         <div class="font-weight-bold" style="width: 120px;">税込価格</br>(税抜価格)</div>
         <%= number_to_currency(@item.price_without_tax, unit: "", precision: 0) %>
         (<%= number_to_currency((@item.price_without_tax * 1.1).round, unit: "", precision: 0) %>)
+        円
       </div>
 
       <div class="d-flex mb-3">
