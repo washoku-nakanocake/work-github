@@ -1,7 +1,7 @@
 class Public::SessionsController < Devise::SessionsController
   before_action :reject_inactive_customer, only: :create
 
-  def after_sign_in_path_for(_resource) = customers_my_page_path
+  def after_sign_in_path_for(_resource) = root_path
 
   private
   def reject_inactive_customer
