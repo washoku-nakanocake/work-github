@@ -1,24 +1,45 @@
-<h1>会員一覧</h1>
+<div class="container">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">会員一覧</h1>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>会員ID</th>
-      <th>氏名</th>
-      <th>メールアドレス</th>
-      <th>ステータス</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @customers.each do |c| %>
-      <tr>
-        <td><%= c.id %></td>
-        <td><%= link_to "#{c.try(:last_name)} #{c.try(:first_name)}", admin_customer_path(c) %></td>
-        <td><%= c.email %></td>
-        <td><%= c.is_active? ? "有効" : "退会" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="card">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">会員ID</th>
+              <th scope="col">氏名</th>
+              <th scope="col">メールアドレス</th>
+              <th scope="col" class="text-center">ステータス</th>  <!-- ← カンマ削除 -->
+            </tr>
+          </thead>
+          <tbody>
+            <% @customers.each do |c| %>
+              <tr>
+                <td><%= c.id %></td>
+                <td>
+                  <%= link_to([c&.last_name, c&.first_name].compact.join(' ').presence || "—",
+                               admin_customer_path(c), class: "text-reset text-decoration-none") %>
+                </td>
+                <td><%= c.email %></td>
+                <td class="text-center">
+                  <% if c.is_active? %>
+                    <span class="badge badge-success">有効</span>
+                  <% else %>
+                    <span class="badge badge-secondary">退会</span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-<%= paginate @customers if respond_to?(:paginate) %>
+  <div class="mt-3 d-flex justify-content-center">
+    <%= paginate @customers if respond_to?(:paginate) %>
+  </div>
+</div>

@@ -13,3 +13,68 @@
  *= require_tree .
  *= require_self
  */
+/* reset */
+ * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ /* --- bg --- */
+.auth-bg {
+  position: relative;
+  min-height: 100vh;
+  background:
+    radial-gradient(60rem 30rem at -10% -10%, rgba(255,255,255,0.35), transparent 60%),
+    radial-gradient(50rem 25rem at 110% -10%, rgba(255,255,255,0.25), transparent 60%),
+    linear-gradient(135deg, #a0c9ff 0%, #d0b3ff 50%, #a2facf 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+/* glass box */
+.glass-card {
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 2rem;
+  padding: 2.25rem 2rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,.15), 0 10px 25px rgba(0,0,0,.06);
+  backdrop-filter: saturate(160%) blur(16px);
+  -webkit-backdrop-filter: saturate(160%) blur(16px);
+}
+
+/* field */
+.glass-input {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: .9rem;
+  transition: background .2s, box-shadow .2s, border-color .2s;
+}
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .15);
+  border-color: rgba(0,123,255,.35);
+}
+
+/* custom button */
+.btn-custom-blue,
+.btn-custom-blue:hover,
+.btn-custom-blue:focus,
+.btn-custom-blue:active,
+.btn-custom-blue:disabled { color: #f3f3f3 !important; }
+.btn-custom-blue {
+  border: 0;
+  border-radius: 999px;
+  padding: .85rem 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(180deg, #4f86ff 0%, #2f6bff 100%);
+  box-shadow:
+    0 10px 20px rgba(47,107,255,.25),
+    0 2px 6px rgba(47,107,255,.25),
+    inset 0 1px 0 rgba(255,255,255,.35);
+}
+.btn-custom-blue:hover { filter: brightness(1.03); }
+.btn-custom-blue:active { transform: translateY(1px); box-shadow: 0 6px 12px rgba(47,107,255,.3), 0 1px 3px rgba(47,107,255,.3); }
