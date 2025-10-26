@@ -21,7 +21,7 @@
         <dt class="col-sm-4 mb-3">ジャンル</dt>
         <dd class="col-sm-8"><%= @item.genre.name if @item.genre %></dd>
 
-        <dt class="col-sm-4 mb-3">価格 税込価格</br>(税抜価格):</dt>
+        <dt class="col-sm-4 mb-3">税込価格</br>(税抜価格)</dt>
         <dd class="col-sm-8">
           <% tax_rate = 1.10 %>
           <% price_with_tax = (@item.price_without_tax * tax_rate).round %>
