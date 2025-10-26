@@ -31,14 +31,7 @@
         <%= f.password_field :password, autocomplete: "current-password",
               class: "form-control form-control-lg glass-input", placeholder: "••••••••" %>
       </div>
-
-      <% if devise_mapping.rememberable? %>
-        <div class="custom-control custom-checkbox mb-3">
-          <%= f.check_box :remember_me, class: "custom-control-input", id: "remember_me_customer" %>
-          <%= f.label :remember_me, "ログイン状態を保持する", class: "custom-control-label", for: "remember_me_customer" %>
-        </div>
-      <% end %>
-
+      
       <%= f.submit "ログイン", class: "btn btn-custom-blue btn-lg btn-block" %>
     <% end %>
 
