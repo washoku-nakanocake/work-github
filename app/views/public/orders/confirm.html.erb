@@ -1,74 +1,97 @@
-<div class="container">
+<div class="container my-4">
   <div class="row">
     <div class="col-md-12">
+      
+      <h3 class="mb-4 bg-light p-2 border d-inline-block">注文情報確認</h3>
+      
+      <div class="row mb-5">
+        
+        <div class="col-md-8">
+          <table class="table table-bordered table-sm">
+            <thead class="thead-light">
+              <tr>
+                <th style="width: 45%;">商品名</th>
+                <th class="text-right">単価(税込)</th>
+                <th class="text-right">数量</th>
+                <th class="text-right">小計</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @cart_items.each do |cart_item| %>
+                <% item_price_with_tax = (cart_item.item.price_without_tax * 1.1).floor %>
+                <% item_subtotal = item_price_with_tax * cart_item.amount %>
+                
+                <tr>
+                  <td class="d-flex align-items-center">
+                    <%= image_tag cart_item.item.image, size: '50x50' %>
+                    <strong><%= cart_item.item.name %></strong>
+                  </td>
+                  <td class="text-right"><%= number_with_delimiter(item_price_with_tax) %></td>
+                  <td class="text-right"><%= cart_item.amount %></td>
+                  <td class="text-right"><%= number_with_delimiter(item_subtotal) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
 
-      <h3>注文情報確認</h3>
-        <table>
-          <tr>
-            <td>商品名</td>
-            <td>単価(税込)</td>
-            <td>数量</td>
-            <td>小計</td>
-          </tr>
-          <% @cart_items.each do |cart_item| %>
-          <tr>
-            <% # item_price_with_taxを計算して表示する %>
-            <% item_price_with_tax = (cart_item.item.price_without_tax * 1.1).floor %>
-            <td>
-              <%= image_tag cart_item.item.image, size: "100x80" %>
-              <strong><%= cart_item.item.name %></strong>
-            </td>
-            <td><%= item_price_with_tax %></td>
-            <td><%= cart_item.amount %></td>
-            <td><%= item_price_with_tax*cart_item.amount %></td>
-          </tr>
-          <% end %>
-        </table>
+        <div class="col-md-4">
+          <table class="table table-bordered table-sm">
+            <tr>
+              <th class="bg-light" style="width: 50%;">送料</th>
+              <td class="text-right"><%= number_with_delimiter(@shipping_cost) %></td>
+            </tr>
+            <tr>
+              <th class="bg-light">商品合計</th>
+              <td class="text-right"><%= number_with_delimiter(@total_payment) %></td>
+            </tr>
+            <tr>
+              <th class="bg-light">請求金額</th>
+              <td class="text-right"><%= number_with_delimiter(@total_payment + @shipping_cost) %></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      
 
-        <table>
-          <tr>
-            <td>送料</td>
-            <td><%= @shipping_cost %></td>
-          </tr>
-          <tr>
-            <td>商品合計</td>
-            <td><%= @total_payment %></td>
-          </tr>
-          <tr>
-            <td>請求金額</td>
-            <td><%= @total_payment + @shipping_cost %></td>
-          </tr>
-        </table>
-
-      <h4>支払方法</h4>
+      <div class="mb-3">
+        <strong class="mr-2">支払方法</strong>
         <% if @selected_payment_method == "credit_card" %>
           クレジットカード
         <% else %>
           銀行振込
         <% end %>
+      </div>
         
-      <h4>お届け先</h4>
-        <%= @selected_address %>
+      <%# お届け先 %>
+      <div class="mb-4">
+        <strong class="mr-2">お届け先</strong>
+        〒<%= @selected_address %>
+      </div>
+      
+      <div class="text-center">
         <%= form_with url: orders_path, method: :post do %>
           <%= hidden_field_tag 'order[payment_method]', @selected_payment_method %>
           <%= hidden_field_tag 'order[address_type]', @address_type %>
-            <% if @address_type == "customer_address" %>
-              <%= hidden_field_tag 'order[postal_code]', current_customer.postal_code %>
-              <%= hidden_field_tag 'order[address]', current_customer.address %>
-              <%= hidden_field_tag 'order[name]', current_customer.last_name + current_customer.first_name %>
-            <% elsif @address_type == "registered_address" %>
-              <% selected_address_parts = @selected_address.split(' ', 3) %>
-              <%= hidden_field_tag 'order[postal_code]', selected_address_parts[0] %>
-              <%= hidden_field_tag 'order[address]', selected_address_parts[1] %>
-              <%= hidden_field_tag 'order[name]', selected_address_parts[2] %>
-              <%= hidden_field_tag 'order[registered_address_id]', params[:order][:registered_address_id] %>
-            <% elsif @address_type == "new_address" %>
-              <%= hidden_field_tag 'order[postal_code]', params[:order][:new_postal_code] %>
-              <%= hidden_field_tag 'order[address]', params[:order][:new_address] %>
-              <%= hidden_field_tag 'order[name]', params[:order][:new_name] %>
-            <% end %>
-          <%= submit_tag "注文を確定する", class: "btn btn-success" %>
+          <% if @address_type == "customer_address" %>
+            <%= hidden_field_tag 'order[postal_code]', current_customer.postal_code %>
+            <%= hidden_field_tag 'order[address]', current_customer.address %>
+            <%= hidden_field_tag 'order[name]', current_customer.last_name + current_customer.first_name %>
+          <% elsif @address_type == "registered_address" %>
+            <% selected_address_parts = @selected_address.split(' ', 3) %>
+            <%= hidden_field_tag 'order[postal_code]', selected_address_parts[0] %>
+            <%= hidden_field_tag 'order[address]', selected_address_parts[1] %>
+            <%= hidden_field_tag 'order[name]', selected_address_parts[2] %>
+            <%= hidden_field_tag 'order[registered_address_id]', params[:order][:registered_address_id] %>
+          <% elsif @address_type == "new_address" %>
+            <%= hidden_field_tag 'order[postal_code]', params[:order][:new_postal_code] %>
+            <%= hidden_field_tag 'order[address]', params[:order][:new_address] %>
+            <%= hidden_field_tag 'order[name]', params[:order][:new_name] %>
+          <% end %>
+          
+          <%= submit_tag "注文を確定する", class: "btn btn-success btn-lg" %>
         <% end %>
+      </div>
     </div>
   </div>
 </div>

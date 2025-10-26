@@ -1,4 +1,6 @@
 class Admin::OrdersController < ApplicationController
+  before_action :authenticate_admin!
+  
   def order_params
     params.require(:order).permit(:status)
   end
@@ -10,11 +12,9 @@ class Admin::OrdersController < ApplicationController
 
   def update 
     @order = Order.find(params[:id])
-    @order_details = @order.order_details # OrderDetailの連動更新に使用
+    @order_details = @order.order_details
     
     if @order.update(order_params)
-      # ★ 修正/確認: ステータスが "deposit_completed" (入金確認) になったら、
-      # 全商品の製作ステータスを "waiting_for_making" (製作待ち) に更新
       if @order.status == "deposit_completed"
         @order_details.update_all(making_status: "waiting_for_making")
       end
