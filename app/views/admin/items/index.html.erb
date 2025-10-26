@@ -1,5 +1,10 @@
 <div class="container mt-4">
-  <h1 class="mb-4">商品一覧</h1>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">商品一覧</h1>
+    <%= link_to new_admin_item_path, class: "d-flex align-items-center" do %>
+      <i class="fa-solid fa-plus fa-lg mr-2 text-secondary"></i>
+    <% end %>
+  </div>
 
   <table class="table text-center no-border-table">
     <thead class="thead-light">
