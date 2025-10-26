@@ -19,7 +19,7 @@
             <tbody>
               <% @orders.each do |o| %>
                 <tr>
-                  <td><%= link_to((l(o.created_at, format: :short) rescue o.created_at),
+                  <td><%= link_to((o.created_at.strftime('%Y-%m-%d %H:%M') rescue o.created_at),
                           admin_order_path(o), class: "text-reset text-decoration-none") %>
                   </td>
                   <%# if customer = nil, return nil、普通はありえないことなんですが、 念の為 if nil show "-"" にします %>
