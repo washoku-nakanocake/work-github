@@ -1,51 +1,88 @@
-<h1>ショッピングカート</h1>
+<div class="container my-4">
 
-<% if @cart_items.present? %>
-  <div>
-    <%= button_to "カートを空にする", destroy_all_cart_items_path, method: :delete , data: { confirm: '全て削除してもよろしいですか？' } %>
-  </div>
-  <table> 
-    <thead>
-      <th>商品名</th>
-      <th>単価(税込)</th>
-      <th>数量</th>
-      <th>小計</th>
-      <th></th>
-    </thead>
-    <tbody>
-      <% @cart_items.each do |cart_item| %>
-        <tr>
-          <td><%= cart_item.item.name %></td>
-          <td><%= (cart_item.item.price_without_tax * 1.1).floor %></td>
-          <td>
-            <%= form_with model: cart_item, method: :patch, local: true do |f| %>
-              <%= f.select :amount, *[1..10] %>
-              <%= f.submit '変更' %>
-            <% end %>
-          </td>
-          <td><%= (cart_item.item.price_without_tax * 1.1).floor * cart_item.amount %></td>
-          <td><%= link_to '削除する', cart_item_path(cart_item), method: :delete, data: { confirm: '削除してもよろしいですか？' } %></td>
-          <% @total_payment +=  (cart_item.item.price_without_tax * 1.1).floor * cart_item.amount %>
-        </tr>
+  <div class="row align-items-center mb-4 p-2">
+    <div class="col-8">
+      <h3 class="mb-4 bg-light p-2 border d-inline-block">ショッピングカート</h3>
+    </div>
+    <div class="col-4 text-right">
+      <% if @cart_items.present? %>
+        <%= button_to "カートを空にする", destroy_all_cart_items_path, method: :delete, 
+                      data: { confirm: '全て削除してもよろしいですか？' }, 
+                      class: "btn btn-danger btn-sm" %>
       <% end %>
-    </tbody>
-  </table>
-
-  <div>
-    <%= link_to '買い物を続ける', items_path %>
+    </div>
   </div>
-  
-  <table>
-    <tr>
-      <td>合計金額</td>
-      <td><%= @total_payment.to_s(:delimited) %></td>
-    </tr>
-  </table>
 
-  <div>
-    <%= link_to '情報入力に進む', new_order_path %>
-  </div>
-  
-<% else %>
-  <p>カートに商品はありません。</p>
-<% end %>
+  <% if @cart_items.present? %>
+    
+    <table class="table table-bordered table-sm"> 
+      <thead class="thead-light">
+        <tr>
+          <th style="width: 40%;">商品名</th>
+          <th style="width: 15%;" class="text-right">単価(税込)</th>
+          <th style="width: 20%;">数量</th>
+          <th style="width: 15%;" class="text-right">小計</th>
+          <th style="width: 10%;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @total_payment = 0 %> <%# 合計金額の初期化 %>
+        <% @cart_items.each do |cart_item| %>
+          <% item_price_with_tax = (cart_item.item.price_without_tax * 1.1).floor %>
+          <% item_subtotal = item_price_with_tax * cart_item.amount %>
+          
+          <tr>
+            <td class="d-flex align-items-center">
+              <%= image_tag cart_item.item.image, size: '50x50' %>
+              <%= cart_item.item.name %>
+            </td>
+            <td class="text-right"><%= number_with_delimiter(item_price_with_tax) %></td>
+            <td>
+              <%= form_with model: cart_item, method: :patch, local: true, class: "d-flex align-items-center" do |f| %>
+                <%= f.select :amount, options_for_select(1..10, cart_item.amount), {}, class: "form-control form-control-sm mr-1 w-50" %>
+                <%= f.submit '変更', class: "btn btn-success btn-sm" %>
+              <% end %>
+            </td>
+            <td class="text-right"><%= number_with_delimiter(item_subtotal) %></td>
+            <td>
+              <%= link_to '削除する', cart_item_path(cart_item), method: :delete, 
+                          data: { confirm: '削除してもよろしいですか？' }, 
+                          class: "btn btn-danger btn-sm" %>
+            </td>
+          </tr>
+          <% @total_payment += item_subtotal %>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div class="row mt-4">
+      
+      <div class="col-md-6">
+        <%= link_to '買い物を続ける', admin_root_path, class: "btn btn-primary" %>
+      </div>
+      
+      <div class="col-md-6">
+        
+        <div class="d-flex justify-content-end mb-4">
+          <table class="table table-bordered w-50 table-sm">
+            <tr>
+              <th class="bg-light" style="width: 50%;">合計金額</th>
+              <td class="text-right"><%= number_with_delimiter(@total_payment) %></td>
+            </tr>
+          </table>
+        </div>
+        
+        <div class="text-center">
+          <%= link_to '情報入力に進む', new_order_path, class: "btn btn-success btn-lg" %>
+        </div>
+      </div>
+      
+    </div>
+    
+  <% else %>
+    <div class="alert alert-info">
+      <p>カートに商品はありません。</p>
+    </div>
+  <% end %>
+
+</div>

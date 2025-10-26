@@ -1,18 +1,22 @@
 class Public::OrdersController < ApplicationController
-  before_action :authenticate_customer!, only: [:new, :confirm, :create, :index, :show, :thanks]
+  before_action :authenticate_customer!
     
   def new
   end
 
   def index
-    @orders = current_customer.orders # current_customer.orders でも絞り込めます
-             .includes(order_details: :item) # ★ N+1問題を解消するための追記 ★
+    @orders = current_customer.orders
+             .includes(order_details: :item)
              .order(created_at: :desc)
-             .page(params[:page])
+             .page(params[:page]).per(10)
   end
     
   def show
-    @order = Order.find(params[:id])
+    @order = current_customer.orders.find_by(id: params[:id])
+    unless @order
+      flash[:alert] = "指定された注文は存在しないか、アクセス権がありません。"
+      redirect_to orders_path and return
+    end
     @order_details= OrderDetail.where(order_id: @order.id)
   end 
     
@@ -21,10 +25,9 @@ class Public::OrdersController < ApplicationController
     
   def confirm
     @cart_items = CartItem.where(customer_id: current_customer.id)
-    @shipping_cost = 800 #送料は800円で固定
+    @shipping_cost = 800
     @selected_payment_method = params[:order][:payment_method]
       
-    #以下、商品合計額の計算
     ary = []
       @cart_items.each do |cart_item|
         item_price_with_tax = (cart_item.item.price_without_tax * 1.1).floor
@@ -89,7 +92,7 @@ class Public::OrdersController < ApplicationController
         OrderDetail.create!(
           order_id: @order.id, 
           item_id: cart_item.item.id, 
-          price: item_price_with_tax, # ★ 税込価格を保存
+          price: item_price_with_tax,
           amount: cart_item.amount, 
           making_status: initial_making_status
         )
