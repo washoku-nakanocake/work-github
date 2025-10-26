@@ -11,7 +11,7 @@ class Public::CustomersController < ApplicationController
   def withdraw
     current_customer.update!(is_active: false)
     reset_session
-    redirect_to new_customer_registration_path, notice: "退会手続きが完了しました。"
+    redirect_to root_path, notice: "退会手続きが完了しました。"
   end
   
   def edit; end
