@@ -1,0 +1,72 @@
+<div class="container mt-5">
+  <h2 class="mb-4 ml-5">商品編集</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card border-0">
+        <div class="card-body">
+
+          <%= form_with model: @item, url: admin_item_path(@item), method: :patch, local: true do |f| %>
+
+            <div class="form-group row">
+              <%= f.label :image, "商品画像", class: "col-sm-3 col-form-label" %>
+              <div class="col-sm-9">
+                <%= f.file_field :image, accept: "image/*", class: "form-control-file" %>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <%= f.label :name, "商品名", class: "col-sm-3 col-form-label" %>
+              <div class="col-sm-9">
+                <%= f.text_field :name, class: "form-control" %>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <%= f.label :detail, "商品詳細", class: "col-sm-3 col-form-label" %>
+              <div class="col-sm-9">
+                <%= f.text_area :detail, class: "form-control", rows: 3 %>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <%= f.label :genre_id, "ジャンル", class: "col-sm-3 col-form-label" %>
+              <div class="col-sm-9">
+                <%= f.collection_select :genre_id, Genre.all, :id, :name, 
+                    { prompt: "選択してください" }, { class: 'form-control' } %>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <%= f.label :price_without_tax, "税抜価格", class: "col-sm-3 col-form-label" %>
+              <div class="col-sm-9">
+                <%= f.text_field :price_without_tax, class: "form-control" %>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <%= f.label :status, "販売ステータス", class: "col-sm-3 col-form-label" %>
+              <div class="col-sm-9">
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :status, 'on_sale', checked: @item.status == 'on_sale', class: 'form-check-input', id: 'status-on-sale' %>
+                  <%= f.label :status, '販売中', class: 'form-check-label', for: 'status-on-sale' %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :status, 'off_sale', checked: @item.status == 'off_sale', class: 'form-check-input', id: 'status-off-sale' %>
+                  <%= f.label :status, '販売停止中', class: 'form-check-label', for: 'status-off-sale' %>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-12 text-center mt-4">
+                <%= f.submit '更新', class: "btn btn-primary px-4" %>
+              </div>
+            </div>
+
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

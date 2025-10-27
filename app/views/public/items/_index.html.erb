@@ -1,0 +1,31 @@
+<div class="row">
+  <!-- 左カラム：ジャンル検索 -->
+  <div class="col-md-3">
+    <%= render "genre_search", genres: genres %>
+  </div>
+
+  <!-- 右カラム：商品一覧 -->
+  <div class="col-md-9">
+    <h3>商品一覧（全<%= total_count %>件）</h3>
+    <div class="row">
+      <% items.each do |item| %>
+        <div class="col-12 col-sm-6 col-md-4 mb-4">
+          <%= link_to item_path(item), class: "text-body text-decoration-none" do %>
+            <div class="card h-100">
+              <%= image_tag item.image, class: "card-img-top", style: "max-width: 100%;" %>
+              <div class="card-body">
+                <h5 class="card-title mb-1"><%= item.name %></h5>
+                <p class="card-text">¥<%= item.price_without_tax %></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- ページネーション -->
+    <div class="d-flex justify-content-center">
+      <%= paginate items %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">マイページ</h1>
+    <%= link_to "編集する", customers_information_edit_path, class: "btn btn-primary" %>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header">登録情報</div>
+    <div class="card-body p-0">
+      <table class="table mb-0">
+        <tbody>
+          <tr>
+            <th style="width: 160px;">氏名</th>
+            <td><%= @customer.last_name %> <%= @customer.first_name %></td>
+          </tr>
+          <tr>
+            <th>カナ</th>
+            <td><%= @customer.last_name_kana %> <%= @customer.first_name_kana %></td>
+          </tr>
+          <tr>
+            <th>郵便番号</th>
+            <td><%= @customer.postal_code %></td>
+          </tr>
+          <tr>
+            <th>住所</th>
+            <td><%= @customer.address %></td>
+          </tr>
+          <tr>
+            <th>電話番号</th>
+            <td><%= @customer.telephone_number %></td>
+          </tr>
+          <tr>
+            <th>メールアドレス</th>
+            <td><%= @customer.email %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <a href="<%= addresses_path %>" class="card text-reset text-decoration-none h-100">
+        <div class="card-body d-flex justify-content-between align-items-center">
+          <span>配送先</span>
+          <span class="btn btn-outline-secondary btn-sm mb-0">一覧を見る</span>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-6 mb-3">
+      <a href="<%= orders_path %>" class="card text-reset text-decoration-none h-100">
+        <div class="card-body d-flex justify-content-between align-items-center">
+          <span>注文履歴</span>
+          <span class="btn btn-outline-secondary btn-sm mb-0">一覧を見る</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

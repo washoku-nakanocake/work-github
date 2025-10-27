@@ -1,0 +1,48 @@
+<div class="container mt-5">
+  <h2 class="mb-5">商品詳細</h2>
+
+  <div class="row">
+    <div class="col-md-4 text-center mb-4 mb-md-0">
+      <%= image_tag @item.image, class: "img-fluid", style: "max-width: 90%;" %>
+    </div>
+
+    <div class="col-md-8">
+      <div class="d-flex mb-3">
+        <div class="font-weight-bold" style="width: 120px;">商品名:</div>
+        <div><%= @item.name %></div>
+      </div>
+
+      <div class="d-flex mb-3">
+        <div class="font-weight-bold" style="width: 120px;">商品詳細:</div>
+        <div><%= @item.detail %></div>
+      </div>
+
+      <div class="d-flex mb-3">
+        <div class="font-weight-bold" style="width: 120px;">ジャンル:</div>
+        <div><%= @item.genre&.name %></div>
+      </div>
+
+      <div class="d-flex mb-3">
+        <div class="font-weight-bold" style="width: 120px;">税込価格</br>(税抜価格)</div>
+        <%= number_to_currency(@item.price_without_tax, unit: "", precision: 0) %>
+        (<%= number_to_currency((@item.price_without_tax * 1.1).round, unit: "", precision: 0) %>)
+        円
+      </div>
+
+      <div class="d-flex mb-3">
+        <div class="font-weight-bold" style="width: 120px;">ステータス:</div>
+        <div>
+          <% if @item.on_sale? %>
+            <span class="text-success">販売中</span>
+          <% else %>
+            <span class="text-secondary">販売停止中</span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <%= link_to "編集", edit_admin_item_path(@item), class: "btn btn-success", style: "width: 150px;" %>
+      </div>
+    </div>
+  </div>
+</div>

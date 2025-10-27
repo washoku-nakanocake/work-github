@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <%# rescue "#" とは　もし問題なければroot_pathのurlへ移動、route設定ミスならblankページになります %>
+    <%= link_to "Nakano Cake", (root_path rescue "#"), class: "navbar-brand" %>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ml-auto">
+        <% if admin_signed_in? %>
+          <li class="nav-item"><%= link_to "商品一覧", (admin_items_path rescue "#"), class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "会員一覧", admin_customers_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "注文履歴一覧", admin_root_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "ジャンル一覧", (admin_genres_path rescue "#"), class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "nav-link" %></li>
+
+        <% elsif customer_signed_in? %>
+          <li class="nav-item">
+            <span class="navbar-text mr-3">
+              ようこそ、<%= [current_customer&.last_name, current_customer&.first_name].compact.join(' ') %>さん！
+            </span>
+          </li>
+          <li class="nav-item"><%= link_to "マイページ", (customers_my_page_path rescue "#"), class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "商品一覧", (items_path rescue "#"), class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "カート", cart_items_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "nav-link" %></li>
+
+        <% else %>
+          <li class="nav-item"><%= link_to "About", (about_path rescue "#"), class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "商品一覧", (items_path rescue "#"), class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "新規登録", new_customer_registration_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "ログイン", new_customer_session_path, class: "nav-link" %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

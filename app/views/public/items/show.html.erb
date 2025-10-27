@@ -1,0 +1,41 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-3">
+      <%= render "genre_search", genres: @genres %>
+    </div>
+
+    <div class="col-md-3">
+      <div class="mb-3">
+        <%= image_tag @item.image, class: "card-img-top", style: "max-width: 300px;" %>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <dl class="row">
+        <dt class="col-sm-4 mb-3">商品名</dt>
+        <dd class="col-sm-8"><%= @item.name %></dd>
+
+        <dt class="col-sm-4 mb-3">商品説明</dt>
+        <dd class="col-sm-8"><%= @item.detail %></dd>
+
+        <dt class="col-sm-4 mb-3">ジャンル</dt>
+        <dd class="col-sm-8"><%= @item.genre.name if @item.genre %></dd>
+
+        <dt class="col-sm-4 mb-3">税込価格</br>(税抜価格)</dt>
+        <dd class="col-sm-8">
+          <% tax_rate = 1.10 %>
+          <% price_with_tax = (@item.price_without_tax * tax_rate).round %>
+          <%= number_to_currency(price_with_tax, unit: "¥", precision: 0) %> (<%= number_to_currency(@item.price_without_tax, unit: "¥", precision: 0) %>)
+        </dd>
+      </dl>
+
+      <div class="product-purchase mt-3 d-flex align-items-center">
+        <%= form_with model: @cart_item, data: { turbo: false }, html: { class: "d-flex" } do |f| %>
+          <%= f.hidden_field :item_id, value: @item.id %>
+          <%= f.select :amount, *[1..10], {}, class: "form-control mr-2" %>
+          <%= f.submit "カートに入れる", class: "btn btn-success" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

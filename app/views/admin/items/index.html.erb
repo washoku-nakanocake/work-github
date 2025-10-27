@@ -1,0 +1,74 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">商品一覧</h1>
+    <%= link_to new_admin_item_path, class: "d-flex align-items-center" do %>
+      <i class="fa-solid fa-plus fa-lg mr-2 text-secondary"></i>
+    <% end %>
+  </div>
+
+  <table class="table text-center no-border-table">
+    <thead class="thead-light">
+      <tr>
+        <th style="width: 10%;">商品ID</th>
+        <th style="width: 30%;">商品名</th>
+        <th style="width: 20%;">税抜価格</th>
+        <th style="width: 20%;">ジャンル</th>
+        <th style="width: 20%;">ステータス</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <td><%= item.id %></td>
+          <td class="text-left">
+            <%= link_to item.name, admin_item_path(item), class: "product-link" %>
+          </td>
+          <td><%= item.price_without_tax %></td>
+          <td><%= item.genre&.name %></td>
+          <td>
+            <% if item.on_sale? %>
+              <span class="status-active">販売中</span>
+            <% else %>
+              <span class="status-inactive">販売停止中</span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<style>
+  /* 枠線削除 */
+  .no-border-table th,
+  .no-border-table td {
+    border: none !important;
+  }
+
+  /* ヘッダー背景 */
+  .no-border-table thead th {
+    background-color: #e9ecef;
+    font-weight: 600;
+  }
+
+  /* 商品名リンク：黒＋常に下線 */
+  .product-link {
+    color: #000 !important;
+    text-decoration: underline;
+  }
+
+  .product-link:hover {
+    color: #000 !important; /* ホバー時も色を変えない */
+  }
+
+  /* ステータスの色 */
+  .status-active {
+    color: #28a745; /* 緑 */
+    font-weight: bold;
+  }
+
+  .status-inactive {
+    color: #6c757d; /* 灰 */
+    font-weight: bold;
+  }
+</style>
